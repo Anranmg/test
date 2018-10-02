@@ -1,0 +1,588 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Stats 506, F18, Problem Set 1},
+            pdfauthor={Anran Meng, anmeng@umich.edu},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Stats 506, F18, Problem Set 1}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Anran Meng, \href{mailto:anmeng@umich.edu}{\nolinkurl{anmeng@umich.edu}}}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2018/10/1}
+
+
+\begin{document}
+\maketitle
+
+\subsection{Question 1}\label{question-1}
+
+\subsubsection{Part A}\label{part-a}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# !/bin/bash}
+\CommentTok{#part a}
+\CommentTok{# How many rows are there for region 3 in the RECS 2015 data set?}
+\FunctionTok{cat}\NormalTok{ recs2015_public_v3.csv }\KeywordTok{|} \FunctionTok{awk}\NormalTok{ -F, }\StringTok{'\{print $2\}'}\KeywordTok{|} \FunctionTok{grep}\NormalTok{ 3 }\KeywordTok{|} \FunctionTok{wc}\NormalTok{ -l}
+\CommentTok{#method2}
+\FunctionTok{cat}\NormalTok{ recs2015_public_v3.csv }\KeywordTok{|} \FunctionTok{cut}\NormalTok{ -d }\StringTok{","}\NormalTok{ -f 2 }\KeywordTok{|} \FunctionTok{grep}\NormalTok{ 3 }\KeywordTok{|} \FunctionTok{wc}\NormalTok{ -l}
+
+\CommentTok{#data set containing only: DOEID, NWEIGHT, and BRRWT1-BRRWT96.}
+\FunctionTok{cut}\NormalTok{ -d }\StringTok{","}\NormalTok{ -f 1,475-571 recs2015_public_v3.csv}\OperatorTok{>}\NormalTok{ subset.csv}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     2010
+##     2010
+\end{verbatim}
+
+\subsubsection{Part B}\label{part-b}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#part 2}
+\CommentTok{#loop to count and print number of observations within each region.}
+\KeywordTok{for} \ExtensionTok{d}\NormalTok{ in 1 2 3 4}
+\KeywordTok{do}
+ \BuiltInTok{echo} \VariableTok{$d}
+ \FunctionTok{cut}\NormalTok{ -d }\StringTok{","}\NormalTok{ -f 2 recs2015_public_v3.csv }\KeywordTok{|} \FunctionTok{grep} \VariableTok{$d} \KeywordTok{|} \FunctionTok{wc}\NormalTok{ -l}
+\KeywordTok{done}
+
+\CommentTok{#file region_division.txt (sorted list unique combi REGIONC,DIVISION}
+\FunctionTok{cut}\NormalTok{ -d }\StringTok{","}\NormalTok{ -f 2-3 recs2015_public_v3.csv}\KeywordTok{|} \FunctionTok{sort} \KeywordTok{|} \FunctionTok{uniq}\NormalTok{ -d -u}\OperatorTok{>}\NormalTok{ region_division.txt}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1
+##      794
+## 2
+##     1327
+## 3
+##     2010
+## 4
+##     1555
+\end{verbatim}
+
+\pagebreak
+
+\subsection{Question 2}\label{question-2}
+
+\subsubsection{Question 2 a.}\label{question-2-a.}
+
+Which airlines were responsible for at least 1\% of the flights
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{longtable}[]{@{}lr@{}}
+\caption{Proprtion of Flights by Airlines Over 1\%.}\tabularnewline
+\toprule
+airline & pecent(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+airline & pecent(\%)\tabularnewline
+\midrule
+\endhead
+United Air Lines Inc. & 17.37\tabularnewline
+JetBlue Airways & 16.21\tabularnewline
+ExpressJet Airlines Inc. & 16.13\tabularnewline
+Delta Air Lines Inc. & 14.28\tabularnewline
+American Airlines Inc. & 9.75\tabularnewline
+Envoy Air & 7.89\tabularnewline
+US Airways Inc. & 6.12\tabularnewline
+Endeavor Air Inc. & 5.41\tabularnewline
+Southwest Airlines Co. & 3.60\tabularnewline
+Virgin America & 1.51\tabularnewline
+AirTran Airways Corporation & 1.01\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsubsection{Question 2 b.}\label{question-2-b.}
+
+number and percent of annual flights in the first 10 months of 2013 and
+the first 10 months of 2014:
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\caption{Number and Percent of Annual Flights (\%) in First 10 Months,
+2013.}\tabularnewline
+\toprule
+Airline & Number & Pecent(\%) & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Airline & Number & Pecent(\%) & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endhead
+AirTran Airways Corporation & 2845 & 1.02 & 0.98 & 1.06\tabularnewline
+American Airlines Inc. & 27447 & 9.82 & 9.71 & 9.93\tabularnewline
+Delta Air Lines Inc. & 40168 & 14.38 & 14.25 & 14.51\tabularnewline
+Endeavor Air Inc. & 15232 & 5.45 & 5.37 & 5.54\tabularnewline
+Envoy Air & 22202 & 7.95 & 7.85 & 8.05\tabularnewline
+ExpressJet Airlines Inc. & 45395 & 16.25 & 16.11 & 16.39\tabularnewline
+JetBlue Airways & 45605 & 16.32 & 16.19 & 16.46\tabularnewline
+Southwest Airlines Co. & 10143 & 3.63 & 3.56 & 3.70\tabularnewline
+US Airways Inc. & 17232 & 6.17 & 6.08 & 6.26\tabularnewline
+United Air Lines Inc. & 48880 & 17.50 & 17.35 & 17.64\tabularnewline
+Virgin America & 4235 & 1.52 & 1.47 & 1.56\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\caption{Number and Percent of Annual Flights (\%) in First 10 Months,
+2014.}\tabularnewline
+\toprule
+Airline & Number & Pecent(\%) & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Airline & Number & Pecent(\%) & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endhead
+AirTran Airways Corporation & 1251 & 0.50 & 0.47 & 0.52\tabularnewline
+American Airlines Inc. & 26302 & 10.45 & 10.33 & 10.56\tabularnewline
+Delta Air Lines Inc. & 41683 & 16.55 & 16.41 & 16.70\tabularnewline
+Endeavor Air Inc. & 0 & 0.00 & 0.00 & 0.00\tabularnewline
+Envoy Air & 18559 & 7.37 & 7.27 & 7.47\tabularnewline
+ExpressJet Airlines Inc. & 39819 & 15.81 & 15.67 & 15.96\tabularnewline
+JetBlue Airways & 44479 & 17.66 & 17.51 & 17.81\tabularnewline
+Southwest Airlines Co. & 11902 & 4.73 & 4.64 & 4.81\tabularnewline
+US Airways Inc. & 16750 & 6.65 & 6.55 & 6.75\tabularnewline
+United Air Lines Inc. & 46267 & 18.37 & 18.22 & 18.53\tabularnewline
+Virgin America & 4797 & 1.91 & 1.85 & 1.96\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}lrrr@{}}
+\caption{Percent Change of Annual Flights (\%) in First 10 Months,
+2013-2014.}\tabularnewline
+\toprule
+Airline & Pecent Change(\%) & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Airline & Pecent Change(\%) & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endhead
+AirTran Airways Corporation & -0.52 & -0.52 & -0.52\tabularnewline
+American Airlines Inc. & 0.62 & 0.62 & 0.62\tabularnewline
+Delta Air Lines Inc. & 2.18 & 2.17 & 2.18\tabularnewline
+Endeavor Air Inc. & -5.45 & -5.45 & -5.45\tabularnewline
+Envoy Air & -0.58 & -0.58 & -0.58\tabularnewline
+ExpressJet Airlines Inc. & -0.44 & -0.44 & -0.43\tabularnewline
+JetBlue Airways & 1.34 & 1.34 & 1.34\tabularnewline
+Southwest Airlines Co. & 1.10 & 1.10 & 1.10\tabularnewline
+US Airways Inc. & 0.48 & 0.48 & 0.49\tabularnewline
+United Air Lines Inc. & 0.88 & 0.88 & 0.88\tabularnewline
+Virgin America & 0.39 & 0.39 & 0.39\tabularnewline
+\bottomrule
+\end{longtable}
+
+Which airlines showed the largest increase and decrease?
+
+largest increase: Delta Air Lines Inc. largest decrease: Endeavor Air
+Inc.
+
+Why do some airlines show an increase in the percent of flights but a
+decrease in the number of flights?
+
+It is due to change in the total yearly amount of flights. As total
+number of flights in 2014 declined from 279384 to 251809, percent would
+rise with drop in number for airlines.
+
+\subsubsection{Question 2 c.}\label{question-2-c.}
+
+Among of the three NYC airports
+
+\begin{longtable}[]{@{}llr@{}}
+\caption{Proprtion of Flights (\%) by Airlines at Each NYC
+Airports.}\tabularnewline
+\toprule
+Airport & Airline & Pecent(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Airport & Airline & Pecent(\%)\tabularnewline
+\midrule
+\endhead
+EWR & United Air Lines Inc. & 39.48\tabularnewline
+EWR & ExpressJet Airlines Inc. & 34.70\tabularnewline
+EWR & JetBlue Airways & 5.78\tabularnewline
+EWR & Southwest Airlines Co. & 5.28\tabularnewline
+EWR & Delta Air Lines Inc. & 4.08\tabularnewline
+EWR & US Airways Inc. & 3.79\tabularnewline
+EWR & American Airlines Inc. & 2.95\tabularnewline
+EWR & Virgin America & 1.54\tabularnewline
+EWR & Envoy Air & 1.17\tabularnewline
+EWR & Alaska Airlines Inc. & 0.62\tabularnewline
+EWR & Endeavor Air Inc. & 0.61\tabularnewline
+EWR & SkyWest Airlines Inc. & 0.00\tabularnewline
+JFK & JetBlue Airways & 39.58\tabularnewline
+JFK & Delta Air Lines Inc. & 20.52\tabularnewline
+JFK & American Airlines Inc. & 13.34\tabularnewline
+JFK & Endeavor Air Inc. & 7.60\tabularnewline
+JFK & Envoy Air & 6.56\tabularnewline
+JFK & United Air Lines Inc. & 4.39\tabularnewline
+JFK & Virgin America & 3.49\tabularnewline
+JFK & US Airways Inc. & 2.93\tabularnewline
+JFK & ExpressJet Airlines Inc. & 1.29\tabularnewline
+JFK & Hawaiian Airlines Inc. & 0.31\tabularnewline
+LGA & Delta Air Lines Inc. & 22.07\tabularnewline
+LGA & Envoy Air & 15.80\tabularnewline
+LGA & American Airlines Inc. & 14.38\tabularnewline
+LGA & US Airways Inc. & 12.57\tabularnewline
+LGA & ExpressJet Airlines Inc. & 10.18\tabularnewline
+LGA & United Air Lines Inc. & 7.54\tabularnewline
+LGA & Southwest Airlines Co. & 6.97\tabularnewline
+LGA & JetBlue Airways & 5.71\tabularnewline
+LGA & AirTran Airways Corporation & 2.39\tabularnewline
+LGA & Endeavor Air Inc. & 1.34\tabularnewline
+LGA & Frontier Airlines Inc. & 0.61\tabularnewline
+LGA & Mesa Airlines Inc. & 0.32\tabularnewline
+LGA & SkyWest Airlines Inc. & 0.12\tabularnewline
+LGA & Virgin America & 0.01\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}llrrr@{}}
+\caption{Proprtion of Flights (\%) by Airlines in Part
+A.}\tabularnewline
+\toprule
+Airport & Airline & Pecent(\%) & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Airport & Airline & Pecent(\%) & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endhead
+EWR & United Air Lines Inc. & 39.48 & 39.27 & 39.69\tabularnewline
+EWR & ExpressJet Airlines Inc. & 34.70 & 34.50 & 34.91\tabularnewline
+EWR & JetBlue Airways & 5.78 & 5.68 & 5.88\tabularnewline
+EWR & Southwest Airlines Co. & 5.28 & 5.18 & 5.38\tabularnewline
+EWR & Delta Air Lines Inc. & 4.08 & 3.99 & 4.16\tabularnewline
+EWR & US Airways Inc. & 3.79 & 3.70 & 3.87\tabularnewline
+EWR & American Airlines Inc. & 2.95 & 2.87 & 3.02\tabularnewline
+EWR & Virgin America & 1.54 & 1.49 & 1.59\tabularnewline
+EWR & Envoy Air & 1.17 & 1.13 & 1.22\tabularnewline
+EWR & Endeavor Air Inc. & 0.61 & 0.58 & 0.64\tabularnewline
+JFK & JetBlue Airways & 39.58 & 39.36 & 39.80\tabularnewline
+JFK & Delta Air Lines Inc. & 20.52 & 20.34 & 20.70\tabularnewline
+JFK & American Airlines Inc. & 13.34 & 13.18 & 13.49\tabularnewline
+JFK & Endeavor Air Inc. & 7.60 & 7.48 & 7.72\tabularnewline
+JFK & Envoy Air & 6.56 & 6.45 & 6.67\tabularnewline
+JFK & United Air Lines Inc. & 4.39 & 4.30 & 4.48\tabularnewline
+JFK & Virgin America & 3.49 & 3.41 & 3.58\tabularnewline
+JFK & US Airways Inc. & 2.93 & 2.85 & 3.00\tabularnewline
+JFK & ExpressJet Airlines Inc. & 1.29 & 1.23 & 1.34\tabularnewline
+LGA & Delta Air Lines Inc. & 22.07 & 21.89 & 22.26\tabularnewline
+LGA & Envoy Air & 15.80 & 15.64 & 15.96\tabularnewline
+LGA & American Airlines Inc. & 14.38 & 14.22 & 14.54\tabularnewline
+LGA & US Airways Inc. & 12.57 & 12.42 & 12.72\tabularnewline
+LGA & ExpressJet Airlines Inc. & 10.18 & 10.04 & 10.32\tabularnewline
+LGA & United Air Lines Inc. & 7.54 & 7.42 & 7.66\tabularnewline
+LGA & Southwest Airlines Co. & 6.97 & 6.86 & 7.09\tabularnewline
+LGA & JetBlue Airways & 5.71 & 5.60 & 5.81\tabularnewline
+LGA & AirTran Airways Corporation & 2.39 & 2.32 & 2.45\tabularnewline
+LGA & Endeavor Air Inc. & 1.34 & 1.29 & 1.40\tabularnewline
+LGA & Virgin America & 0.01 & 0.00 & 0.01\tabularnewline
+\bottomrule
+\end{longtable}
+
+Which airline is the largest carrier at each airport?
+
+\begin{longtable}[]{@{}llr@{}}
+\caption{Largest Carrier at Each Airport.}\tabularnewline
+\toprule
+Airport & Airline & Pecent(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Airport & Airline & Pecent(\%)\tabularnewline
+\midrule
+\endhead
+EWR & United Air Lines Inc. & 39.48\tabularnewline
+JFK & JetBlue Airways & 39.58\tabularnewline
+LGA & Delta Air Lines Inc. & 22.07\tabularnewline
+\bottomrule
+\end{longtable}
+
+\pagebreak
+
+\subsection{Question3}\label{question3}
+
+\subsubsection{Question 3 a}\label{question-3-a}
+
+\begin{longtable}[]{@{}rrrrr@{}}
+\caption{Percent of Homes in Stucco Construction within Each
+Division.}\tabularnewline
+\toprule
+Division & Pecent(\%) & Std\_error & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Division & Pecent(\%) & Std\_error & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endhead
+1 & 1.23 & 0.57 & 0.11 & 2.34\tabularnewline
+2 & 2.06 & 0.52 & 1.04 & 3.08\tabularnewline
+3 & 0.66 & 0.20 & 0.27 & 1.05\tabularnewline
+4 & 4.87 & 1.43 & 2.07 & 7.66\tabularnewline
+5 & 10.62 & 0.99 & 8.67 & 12.57\tabularnewline
+6 & 0.42 & 0.29 & -0.15 & 0.99\tabularnewline
+7 & 2.99 & 0.50 & 2.01 & 3.96\tabularnewline
+8 & 16.61 & 2.28 & 12.14 & 21.07\tabularnewline
+9 & 64.25 & 3.17 & 58.04 & 70.45\tabularnewline
+10 & 44.59 & 1.19 & 42.24 & 46.93\tabularnewline
+\bottomrule
+\end{longtable}
+
+\includegraphics{ps1_files/figure-latex/question3-1.pdf}
+
+Which division has the highest proportion? Which the lowest?
+
+highest proportion: division 9, lowest proportion: divison 6
+
+\subsubsection{Question 3 b}\label{question-3-b}
+
+Average total electricity usage in kilowatt hours in each division
+
+\begin{longtable}[]{@{}rrrrr@{}}
+\caption{Average Total Electricity Usage within Each
+Division.}\tabularnewline
+\toprule
+Division & Average & Std\_error & Lower bound & Upper
+bound\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Division & Average & Std\_error & Lower bound & Upper
+bound\tabularnewline
+\midrule
+\endhead
+1 & 7514.56 & 380.07 & 6769.63 & 8259.49\tabularnewline
+2 & 8465.44 & 139.51 & 8192.01 & 8738.87\tabularnewline
+3 & 9128.66 & 144.85 & 8844.76 & 9412.56\tabularnewline
+4 & 10523.83 & 321.25 & 9894.19 & 11153.47\tabularnewline
+5 & 13446.62 & 191.76 & 13070.77 & 13822.47\tabularnewline
+6 & 14535.97 & 444.16 & 13665.44 & 15406.50\tabularnewline
+7 & 14324.26 & 303.36 & 13729.68 & 14918.84\tabularnewline
+8 & 8384.47 & 460.38 & 7482.13 & 9286.81\tabularnewline
+9 & 10442.02 & 895.47 & 8686.93 & 12197.11\tabularnewline
+10 & 8100.41 & 127.05 & 7851.40 & 8349.41\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}rlrrrr@{}}
+\caption{Average Total Electricity Usage (Urban/Rural) within Each
+Division.}\tabularnewline
+\toprule
+Division & Type & Average & Std\_error & Lower bound & Upper
+bound\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Division & Type & Average & Std\_error & Lower bound & Upper
+bound\tabularnewline
+\midrule
+\endhead
+1 & rural & 9001.05 & 1150.95 & 6745.24 & 11256.87\tabularnewline
+1 & urban & 6963.86 & 540.43 & 5904.64 & 8023.08\tabularnewline
+2 & rural & 12223.39 & 808.95 & 10637.87 & 13808.91\tabularnewline
+2 & urban & 7987.29 & 164.91 & 7664.07 & 8310.51\tabularnewline
+3 & rural & 13500.02 & 766.99 & 11996.76 & 15003.29\tabularnewline
+3 & urban & 7980.07 & 215.41 & 7557.88 & 8402.25\tabularnewline
+4 & rural & 14173.93 & 800.70 & 12604.59 & 15743.28\tabularnewline
+4 & urban & 9466.52 & 375.20 & 8731.14 & 10201.90\tabularnewline
+5 & rural & 15941.99 & 569.97 & 14824.88 & 17059.10\tabularnewline
+5 & urban & 12724.60 & 291.19 & 12153.87 & 13295.33\tabularnewline
+6 & rural & 16332.68 & 1159.29 & 14060.51 & 18604.85\tabularnewline
+6 & urban & 13747.31 & 796.85 & 12185.50 & 15309.11\tabularnewline
+7 & rural & 16317.16 & 1160.85 & 14041.94 & 18592.38\tabularnewline
+7 & urban & 13628.52 & 397.54 & 12849.34 & 14407.69\tabularnewline
+8 & rural & 9356.00 & 1878.16 & 5674.87 & 13037.13\tabularnewline
+8 & urban & 8099.38 & 365.16 & 7383.67 & 8815.09\tabularnewline
+9 & rural & 8610.43 & 1065.26 & 6522.56 & 10698.29\tabularnewline
+9 & urban & 10742.91 & 1301.13 & 8192.73 & 13293.08\tabularnewline
+10 & rural & 14114.76 & 1071.61 & 12014.45 & 16215.07\tabularnewline
+10 & urban & 7348.88 & 225.96 & 6906.01 & 7791.75\tabularnewline
+\bottomrule
+\end{longtable}
+
+\includegraphics{ps1_files/figure-latex/q3b2-1.pdf}
+
+\subsubsection{Question 3 c}\label{question-3-c}
+
+\begin{longtable}[]{@{}rrrrr@{}}
+\caption{Proportion of Homes with Internet Access within Each
+Division.}\tabularnewline
+\toprule
+Division & Prop. Disparity(\%) & Std\_error & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Division & Prop. Disparity(\%) & Std\_error & Lower bound(\%) & Upper
+bound(\%)\tabularnewline
+\midrule
+\endhead
+1 & 1.78 & 3.00 & -4.10 & 7.66\tabularnewline
+2 & -1.95 & 4.03 & -9.86 & 5.96\tabularnewline
+3 & 0.04 & 2.61 & -5.07 & 5.15\tabularnewline
+4 & 7.68 & 4.78 & -1.69 & 17.05\tabularnewline
+5 & 3.26 & 3.27 & -3.14 & 9.66\tabularnewline
+6 & 9.33 & 4.86 & -0.18 & 18.85\tabularnewline
+7 & 5.10 & 3.52 & -1.80 & 12.01\tabularnewline
+8 & 5.50 & 4.93 & -4.16 & 15.15\tabularnewline
+9 & 18.52 & 4.72 & 9.26 & 27.77\tabularnewline
+10 & 3.43 & 4.17 & -4.75 & 11.61\tabularnewline
+\bottomrule
+\end{longtable}
+
+Which division has the largest disparity between urban and rural areas
+in terms of the proportion of homes with internet access?
+
+division 9
+
+
+\end{document}
